@@ -22,7 +22,8 @@ variable "app_ami_id" {
     type = string
     default = "ami-087fd8ad2539f981d"
     }
-     ```
+
+```
 ![](images/3.png)
 
 ##### 4) Now we can go inside the provider.tf file and add in our provider. We will be using AWS.
