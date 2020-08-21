@@ -47,6 +47,8 @@ resource "aws_vpc" "Eng67_Daniel_VPC_Terraform" {
 ```
 ##### 6) Now in the same file we can create the public and private subnets. The code for this is below, Remember to change the cidr block of the subnets:
 
+![](images/5.png)
+
 ```
 # Creation of public subnet 
 resource "aws_subnet" "Eng67_Daniel_Public_Subnet_Terraform" {
@@ -81,4 +83,96 @@ resource "aws_internet_gateway" "Eng67_Daniel_IGW_Terraform" {
 }
 ```
 
-##### 8)
+##### 8) Now we can move on to creating the route table. Agin this is done in the network.tf file
+```
+resource "aws_route_table" "Eng67_Daniel_RouteTable_Terraform" {
+    vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
+    route {
+        //associated subnet can reach everywhere
+        cidr_block = "0.0.0.0/0" 
+        //CRT uses this IGW to reach internet
+        gateway_id = "${aws_internet_gateway.Eng67_Daniel_IGW_Terraform.id}" 
+    }
+    tags = {
+        Name = "Eng67_Daniel_RouteTable_Terraform"
+    }
+}
+```
+
+##### 9) Now we must create a link between the subnet and the route table. Agin this is done in the network.tf file
+```
+resource "aws_route_table_association" "Eng67_Daniel_Subnetlink_Terraform"{
+    subnet_id = "${aws_subnet.Eng67_Daniel_Public_Subnet_Terraform.id}"
+    route_table_id = "${aws_route_table.Eng67_Daniel_RouteTable_Terraform.id}"
+}
+```
+
+##### 10) Now we create the security group. We need to allow an ssh connection from your personal on prem system and also open port 80 to everybody
+```
+resource "aws_security_group" "Eng67_Daniel_SG_Terraform" {
+    vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
+    
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        // This means, all ip address are allowed to ssh ! 
+        // Do not do it in the production. 
+        // Put your office or home address in it!
+        cidr_blocks = ["92.234.30.225/32"]
+    }
+    //If you do not add this rule, you can not reach the NGIX  
+    ingress {
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+        Name = "Eng67_Daniel_SG_Terraform"
+    }
+}
+```
+
+##### 11) Almost there! now we just need to add in our EC2 block code creation. This is done in the vpc.tf file.
+```
+resource "aws_security_group" "Eng67_Daniel_SG_Terraform" {
+    vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
+    
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = -1
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        // This means, all ip address are allowed to ssh ! 
+        // Do not do it in the production. 
+        // Put your office or home address in it!
+        cidr_blocks = ["92.234.30.225/32"]
+    }
+    //If you do not add this rule, you can not reach the NGIX  
+    ingress {
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+        Name = "Eng67_Daniel_SG_Terraform"
+    }
+}
+```
+
+##### 12) Now all thats left to do is run the command ```terraform  ``` If you are prompted to enter a region enter ```eu-west-1 ```
+
+![](images/6.png)
