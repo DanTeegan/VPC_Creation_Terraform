@@ -5,8 +5,14 @@ variable "aws_region" {
 }
 
 
+
+
 variable "app_ami_id" {
     type = string
-    default = "ami-0ff3472dfb98219da"
+    default = "ami-087fd8ad2539f981d"
 
     }
+
+
+
+

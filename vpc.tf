@@ -41,22 +41,15 @@ resource "aws_instance" "Eng67_Daniel_EC2_Terraform" {
     ami = "${var.app_ami_id}"
     instance_type = "t2.micro"
     key_name = "DevOpsStudents"
+    tags = {
+        Name = "Eng67_Daniel_EC2_Terraform"
+    }
+
 
     # VPC
     subnet_id = "${aws_subnet.Eng67_Daniel_Public_Subnet_Terraform.id}"
 
     # Security Group
     vpc_security_group_ids = ["${aws_security_group.Eng67_Daniel_SG_Terraform.id}"]
-
-provisioner "file" {
-        source = "nginx.sh"
-        destination = "/tmp/nginx.sh"
-    }
-    provisioner "remote-exec" {
-        inline = [
-             "chmod +x /tmp/nginx.sh",
-             "sudo /tmp/nginx.sh"
-        ]
-    }
 
 }
