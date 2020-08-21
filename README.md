@@ -173,6 +173,24 @@ resource "aws_security_group" "Eng67_Daniel_SG_Terraform" {
 }
 ```
 
-##### 12) Now all thats left to do is run the command ```terraform  ``` If you are prompted to enter a region enter ```eu-west-1 ```
+##### 12) Now all thats left to do is run the command ```terraform plan  ``` If you are prompted to enter a region enter ```eu-west-1 ```
 
 ![](images/6.png)
+
+##### 13) If no errors occur we can then run ```terraform apply``` again If you are prompted to enter a region enter ```eu-west-1 ```
+
+![](images/7.png)
+
+##### 14) If successfull you should see a similar screen
+
+![](images/8.png)
+
+##### 15) As we can see on AWS the instance has been created
+
+![](images/9.png)
+
+##### 15) And we have the configurations that we used in the terraform file
+
+![](images/10.png)
+
+### This is a WOW moment! Self five! 
