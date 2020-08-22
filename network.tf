@@ -12,16 +12,14 @@ resource "aws_internet_gateway" "Eng67_Daniel_IGW_Terraform" {
 
 resource "aws_route_table" "Eng67_Daniel_RouteTable_Terraform" {
     vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
-    
     route {
         //associated subnet can reach everywhere
         cidr_block = "0.0.0.0/0" 
         //CRT uses this IGW to reach internet
         gateway_id = "${aws_internet_gateway.Eng67_Daniel_IGW_Terraform.id}" 
     }
-    
     tags = {
-        Name = "prod-public-crt"
+        Name = "Eng67_Daniel_RouteTable_Terraform"
     }
 }
 

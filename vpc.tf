@@ -7,8 +7,7 @@ resource "aws_vpc" "Eng67_Daniel_VPC_Terraform" {
     enable_dns_support = "true" #gives you an internal domain name
     enable_dns_hostnames = "true" #gives you an internal host name
     enable_classiclink = "false"
-    instance_tenancy = "default"    
-    
+    instance_tenancy = "default"     
 }
 
 
@@ -22,8 +21,6 @@ resource "aws_subnet" "Eng67_Daniel_Public_Subnet_Terraform" {
         Name = "Eng67_Daniel_Public_Subnet_Terraform"
     }
 }
-
-
 # Creation of private subnet 
 resource "aws_subnet" "Eng67_Daniel_Private_Subnet_Terraform" {
     vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
@@ -35,21 +32,21 @@ resource "aws_subnet" "Eng67_Daniel_Private_Subnet_Terraform" {
     }
 }
 
+
 # Creating the EC2 instance
 
 resource "aws_instance" "Eng67_Daniel_EC2_Terraform" {
     ami = "${var.app_ami_id}"
     instance_type = "t2.micro"
     key_name = "DevOpsStudents"
+    associate_public_ip_address = true
     tags = {
-        Name = "Eng67_Daniel_EC2_Terraform"
+      Name = "eng67.Daniel.Terraform.EC2.App"
     }
-
 
     # VPC
     subnet_id = "${aws_subnet.Eng67_Daniel_Public_Subnet_Terraform.id}"
 
     # Security Group
     vpc_security_group_ids = ["${aws_security_group.Eng67_Daniel_SG_Terraform.id}"]
-
 }
