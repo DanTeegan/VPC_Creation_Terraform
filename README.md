@@ -1,6 +1,6 @@
 # Using Terraform to create a VPC
 
-##### This project will showcase IaC orchestration tools to create infrastructure on the AWS cloud. It will showcase the power of tools such as Terraform can be in creating infrastructure, more specifically a VPC network on AWS.
+##### This project will showcase IaC orchestration tools to create infrastructure on the AWS cloud. It will showcase how powerful tools such as Terraform are and how easy it is to create infrastructure, more specifically a VPC network on AWS.
 
 # Creating a VPC using IAC Terraform
 
