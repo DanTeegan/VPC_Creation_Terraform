@@ -16,7 +16,7 @@ resource "aws_subnet" "Eng67_Daniel_Public_Subnet_Terraform" {
     vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
     cidr_block = "10.20.1.0/24"
     map_public_ip_on_launch = "true" //it makes this a public subnet
-    availability_zone = var.aws_region
+    availability_zone = "eu-west-1a"
     tags = {
         Name = "Eng67_Daniel_Public_Subnet_Terraform"
     }
@@ -26,7 +26,7 @@ resource "aws_subnet" "Eng67_Daniel_Private_Subnet_Terraform" {
     vpc_id = "${aws_vpc.Eng67_Daniel_VPC_Terraform.id}"
     cidr_block = "10.20.2.0/24"
     map_public_ip_on_launch = "false" //it makes this a private subnet
-    availability_zone = var.aws_region
+    availability_zone = "eu-west-1a"
     tags = {
         Name = "Eng67_Daniel_Private_Subnet_Terraform"
     }
@@ -49,4 +49,6 @@ resource "aws_instance" "Eng67_Daniel_EC2_Terraform" {
 
     # Security Group
     vpc_security_group_ids = ["${aws_security_group.Eng67_Daniel_SG_Terraform.id}"]
+
+
 }

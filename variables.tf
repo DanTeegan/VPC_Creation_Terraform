@@ -8,7 +8,3 @@ variable "app_ami_id" {
     type = string
     default = "ami-087fd8ad2539f981d"
     }
-
-
-
-
